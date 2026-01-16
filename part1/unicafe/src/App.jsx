@@ -8,14 +8,29 @@ const Statistics = (props) => {
   }
   return (
     <div>
-      <p>good {props.good}</p>
-      <p>neutral {props.neutral}</p>
-      <p>bad {props.bad}</p>
-      <p>all {props.all}</p>
-      <p>average {props.allPoints/props.all}</p>
-      <p>positive {(props.good / props.all) * 100}%</p>
+      <StatisticLine text="good" value={props.good} />
+      <StatisticLine text="neutral" value={props.neutral} />
+      <StatisticLine text="bad" value={props.bad} />
+      <StatisticLine text="all" value={props.all} />
+      <StatisticLine text="average" value={props.allPoints/props.all} />
+      <StatisticLine text="positive" value={(props.good / props.all) * 100} />
+    
     </div>
   )
+}
+
+const Button = (props) => {
+ /// Button handles the functionality of each feedback submission button.
+  return (
+    <button onClick={props.onClick}>{props.text}</button>
+  )
+}
+
+const StatisticLine = (props) => {
+  if (props.text === "positive") {
+    return (<p>positive {props.value}%</p>)
+  }
+  return <p>{props.text} {props.value}</p>
 }
 
 const App = () => {
@@ -24,7 +39,7 @@ const App = () => {
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
   let all = good + neutral + bad
-  let allPoints = good * 1 + neutral * 0 + bad *(-1)
+  let allPoints = good - bad 
 
 
   const goodClick = () => {
@@ -43,9 +58,9 @@ const App = () => {
     <div>
       <h1>give feedback
       </h1>
-      <button onClick={goodClick}>good</button>
-      <button onClick={neutralClick}>neutral</button>
-      <button onClick={badClick}>bad</button>
+      <Button onClick={goodClick} text="good" />
+      <Button onClick={neutralClick} text="neutral" />
+      <Button onClick={badClick} text="bad" />
 
       <h2>statistics</h2>
 
