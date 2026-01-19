@@ -1,5 +1,21 @@
 import { useState } from 'react'
 
+const MostVote = (props) => {
+  //console.log("what is props.votes now?", props.votes)
+  const maxVote = Math.max(...props.votes) // why have to using object spread?
+  const index = props.votes.indexOf(Math.max(...props.votes))
+  const anecdotes = props.anecdotes
+  //console.log("what is props.anecdotes now?", props.anecdotes)
+  //console.log("what is anecdotes now?", anecdotes)
+  //console.log("what is anecdotes[maxVote] now?", anecdotes[maxVote]) // You need to find the index of max value rather than the max value
+  return (
+    <div>
+      <h1> Anecdote with most votes</h1>
+      {anecdotes[index]}
+      <p>has {maxVote} votes</p>
+    </div>
+  )
+}
 
 const App = () => {
   const anecdotes = [
@@ -38,11 +54,14 @@ const App = () => {
 
   return (
     <div>
+      <h1>Anecdote of the day</h1>
       {anecdotes[selected]}
       <p>Have {votes[selected]} times</p>
       <br></br>
       <button onClick={voteAnecdote}>vote</button>
       <button onClick={nextAnecdote}>next anecdote</button>
+
+      <MostVote votes={votes} anecdotes={anecdotes} />
       
     </div>
   )
